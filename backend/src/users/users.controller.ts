@@ -1,4 +1,4 @@
-import { Controller, Get, UsePipes, ValidationPipe, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, UsePipes, ValidationPipe, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SignInUserDTO } from './dto/singin-user-dto';
@@ -27,15 +27,15 @@ export class UsersController {
     return this.usersService.getUserById(+id);
   }
 
-  @Patch('/forgot-password')
+  @Post('/forgot-password')
   @UsePipes(new ValidationPipe())
   forgotPassword(@Body() forgotPasswordDTO: ForgotPasswordDTO) {
     return this.usersService.forgotPassword(forgotPasswordDTO)
   }
 
-  @Patch('/reset-password:id')
+  @Put('/reset-password/:id')
   @UsePipes(new ValidationPipe())
-  resetPassword(@Param('id') id: string, resetPasswordDTO: ResetPasswordDTO){
+  resetPassword(@Param('id') id: string, @Body() resetPasswordDTO: ResetPasswordDTO){
     return this.usersService.resetPassword(+id, resetPasswordDTO)
   }
 
