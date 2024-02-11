@@ -19,32 +19,42 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     let user: User = this.usersRepository.create(createUserDto)
     let savedUser: Promise<User | null> = this.usersRepository.save(user)
-    console.log((await savedUser).id)
-    return `This action adds a new user with the data: ${user}`;
+    return `This action adds a new user with the data: ${savedUser}`;
   }
 
   async signIn(signInUserDTO: SignInUserDTO) {
     let user:  Promise<User | null> = this.usersRepository.findOneBy(signInUserDTO)
-    console.log((await user).id)
-    return `This action returns the user with email: ${(await user).email} and password: ${(await user).password}`;
+    if (await user !== null){
+      return `This action returns the user with email: ${(await user).email} and password: ${(await user).password}`;
+    }
+    return `The user with such credentials does not exist`;
   }
 
   async getUserById(id: number) {
     let user:  Promise<User | null> = this.usersRepository.findOneBy({id})
-    return `This action returns a the user: ${user} for id: ${id}`;
+    if ( await user !== null) {
+      return `This action returns a the user: ${user} for id: ${id}`;
+    }
+    return `User with id: ${id} does not exist`
   }
 
   async forgotPassword(forgotPasswordDTO: ForgotPasswordDTO){
     let user: Promise<User | null> = this.usersRepository.findOneBy(forgotPasswordDTO)
-    return `This action returns the user with email #${(await user).email}`
+    if (await user !== null){
+      return `This action returns the user with email #${(await user).email}`
+    }
+    return `User with such email does not exist`
   }
 
   async resetPassword(id: number, resetPasswordDTO: ResetPasswordDTO) {
     let user: Promise<User | null> = this.usersRepository.findOneBy({id})
-    ;(await user).password == resetPasswordDTO.password
-    let userWithNewPassword : User = this.usersRepository.merge(await user)
-    this.usersRepository.save(userWithNewPassword)
-    return `This action resets the password for the #${id} user with new passowrd: ${resetPasswordDTO.password}`;
+    if (await user !== null){
+      ;(await user).password == resetPasswordDTO.password
+      let userWithNewPassword : User = this.usersRepository.merge(await user)
+      this.usersRepository.save(userWithNewPassword)
+      return `This action resets the password for the #${id} user with new passowrd: ${resetPasswordDTO.password}`;
+    }
+    return `User with id: ${id} does not exist`
   }
 
   remove(id: number) {
