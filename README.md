@@ -3,10 +3,17 @@
 ## Description of the project
 
 A blog app where people will be able to post and read blogs. Add a little integration of AI, which will be able to recommend what to read to the users.
+### Timeline of the project
+The project aims to be complete before the end of February 2024 with a timeline like this:
+| Milestone | Description | Due Date |
+|-----------------|-----------------|-----------------|
+| User Service | Create the user service part of the project. That means users will be able to register, login, change-password, get personal data, forgot password. In here the first two of the Notification Service functionalities are also implemented -sending eamil to verify account and sending email for forgot-password | 12.02.2024 |
+| Basic CI/CD | Init the basic CI/CD by creating a styling job, testing job and deployment job | 14.02.2024 |
 
-## Init the project
 
-To initialize the project on your local machine you will have to run the following command:
+## Pull the project
+
+To pull the project on your local machine you will have to run the following command:
 
 ```
 git clone git@github.com:AleksHadzhiev/blog-app.git
@@ -52,16 +59,34 @@ For the most part the backend will be developed in nestjs. To run the backend lo
 npm install # to install the latest dependencies
 nest start # Starts listening to PORT:3000
 ```
+To start the DB run the following command:
 
+```
+docker compose up -d
+```
+This will start the DB and a pgadmin, where you can checkout the updates of the local DB.
+
+To run the app and DB together in docker run:
+```
+docker compose --profile app up -d
+```
+This will start the 3 services together. Keep in mind the backed serice takes a bit longer to start up.
 The backend structure will be seperated in a few modules:
 
-### User Module
+### User Module 
 
 The User module will handle the actions of the user such as: 
-- Creating a User
-- Loging in
-- Geting personal information
-- Changing password
-- Forgot password
+- [x] Creating a User
+- [x] Loging in
+- [x] Geting personal information
+- [x] Changing password
+- [x] Forgot password
+
+### Notification Module
+
+THe Notification Module will serve to send emails to users:
+- [ ] Verify registration of account
+- [ ] Forgot password
+- [ ] Delete account
 
 
