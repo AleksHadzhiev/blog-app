@@ -1,32 +1,42 @@
 import { Controller, Get, UsePipes, ValidationPipe, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { SignInUserDTO } from './dto/singin-user-dto';
+import { ForgotPasswordDTO } from './dto/forgot-password.dto';
+import { ResetPasswordDTO } from './dto/update-user.dto';
 
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
+  @Post("/register")
   @UsePipes(new ValidationPipe())
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  findAll() {
+  @Get("/signin")
+  @UsePipes(new ValidationPipe())
+  signIn(@Body() userDTO: SignInUserDTO) {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  getByUserId(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch('/forgot-password')
+  @UsePipes(new ValidationPipe())
+  forgotPassword(@Body() forgotPasswordDTO: ForgotPasswordDTO) {
+    return ""
+  }
+
+  @Patch('/reset-password')
+  @UsePipes(new ValidationPipe())
+  resetPassword(resetPasswordDTO: ResetPasswordDTO){
+
   }
 
   @Delete(':id')
