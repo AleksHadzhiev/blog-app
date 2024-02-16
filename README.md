@@ -7,8 +7,8 @@ A blog app where people will be able to post and read blogs. Add a little integr
 The project aims to be complete before the end of February 2024 with a timeline like this:
 | Milestone | Description | Due Date |
 |-----------------|-----------------|-----------------|
-| User Service | Create the user service part of the project. That means users will be able to register, login, change-password, get personal data, forgot password. In here the first two of the Notification Service functionalities are also implemented -sending eamil to verify account and sending email for forgot-password | 12.02.2024 |
-| Basic CI/CD | Init the basic CI/CD by creating a styling job, testing job and deployment job | 14.02.2024 |
+| User Service | Create the user service part of the project. That means users will be able to register, login, change-password, get personal data, forgot password. In here the first two of the Notification Service functionalities are also implemented -sending eamil to verify account and sending email for forgot-password | 16.02.2024 |
+| Basic CI/CD | Init the basic CI/CD by creating a styling job, testing job and deployment job | 23.02.2024 |
 
 
 ## Pull the project
