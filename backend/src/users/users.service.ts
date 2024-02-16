@@ -6,7 +6,7 @@ import { SignInUserDTO } from './dto/singin-user-dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-
+import * as crypto from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -23,11 +23,9 @@ export class UsersService {
   }
 
   async signIn(signInUserDTO: SignInUserDTO) {
-    let user:  Promise<User | null> = this.usersRepository.findOneBy(signInUserDTO)
-    if (await user !== null){
-      return `This action returns the user with email: ${(await user).email} and password: ${(await user).password}`;
-    }
-    return `The user with such credentials does not exist`;
+    let encryptedPassword =  crypto.createHmac('sha256',signInUserDTO.password).digest('hex')
+    let user:  Promise<User | null> = this.usersRepository.findOneByOrFail({email:signInUserDTO.email, password: encryptedPassword})
+    return user
   }
 
   async getUserById(id: number) {
