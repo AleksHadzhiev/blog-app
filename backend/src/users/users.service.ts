@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as crypto from 'crypto';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class UsersService {
@@ -14,12 +15,13 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private readonly emailService: MailService
   ) {}
 
   async create(createUserDto: CreateUserDto) {
     let user: User = this.usersRepository.create(createUserDto)
     let savedUser: Promise<User | null> = this.usersRepository.save(user)
-    return `This action adds a new user with the data: ${savedUser}`;
+    return savedUser
   }
 
   async signIn(signInUserDTO: SignInUserDTO) {
@@ -37,8 +39,11 @@ export class UsersService {
   }
 
   async forgotPassword(forgotPasswordDTO: ForgotPasswordDTO){
-    let user: Promise<User | null> = this.usersRepository.findOneBy(forgotPasswordDTO)
+    let user: Promise<User | null> = this.usersRepository.findOneBy({email: forgotPasswordDTO.email})
     if (await user !== null){
+      // Apply when frontend is implemented :)
+      // const token = crypto.createHmac('sha256',(await user).password).digest('hex');
+      // await this.emailService.sendForgotPassword(forgotPasswordDTO, token) 
       return `This action returns the user with email #${(await user).email}`
     }
     return `User with such email does not exist`
@@ -48,8 +53,7 @@ export class UsersService {
     let user: Promise<User | null> = this.usersRepository.findOneBy({id})
     if (await user !== null){
       ;(await user).password == resetPasswordDTO.password
-      let userWithNewPassword : User = this.usersRepository.merge(await user)
-      this.usersRepository.save(userWithNewPassword)
+      await this.updateUserInDB(await user)
       return `This action resets the password for the #${id} user with new passowrd: ${resetPasswordDTO.password}`;
     }
     return `User with id: ${id} does not exist`
@@ -60,4 +64,20 @@ export class UsersService {
     return `This action removes a #${id} user`;
   }
 
+  async confirm(token: string){
+    let user: Promise<User | null> = this.usersRepository.findOneBy({password: token})
+    console.log(user)
+    if (user !== null){
+      console.log('CONFIRMED')
+      ;(await user).isVerified = true
+      await this.updateUserInDB(await user)
+      return "You have been confirmed!"
+    }
+    this.usersRepository.delete({password: token})
+  }
+
+  private async updateUserInDB(user:User) {
+    let updatedUser : User = this.usersRepository.merge(await user)
+    this.usersRepository.save(updatedUser)
+  }
 }
