@@ -1,23 +1,27 @@
-import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments} from 'class-validator'
+import {
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  ValidationArguments,
+} from 'class-validator'
 
 @ValidatorConstraint({ name: 'customText', async: false })
 export class WhitespaceConstraint implements ValidatorConstraintInterface {
   validate(text: string, args: ValidationArguments) {
-    return text.trim().length > 0;
+    return text.trim().length > 0
   }
 
   defaultMessage(args: ValidationArguments) {
-    return `${args.property} should not be empty or contain only whitespace`;
+    return `${args.property} should not be empty or contain only whitespace`
   }
 }
 
 @ValidatorConstraint({ name: 'customText', async: false })
 export class IsNaN implements ValidatorConstraintInterface {
   validate(text: string, args: ValidationArguments) {
-    return isNaN(Number(text));
+    return isNaN(Number(text))
   }
 
   defaultMessage(args: ValidationArguments) {
-    return `${args.property} should not be a number`;
+    return `${args.property} should not be a number`
   }
 }
