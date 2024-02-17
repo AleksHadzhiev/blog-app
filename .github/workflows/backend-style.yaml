@@ -9,6 +9,10 @@ jobs:
   prettier-and-lint:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./backend
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -17,9 +21,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '14'
-
-      - name: Change to backend directory
-        run: cd backend
 
       - name: Install dependencies
         run: npm install
