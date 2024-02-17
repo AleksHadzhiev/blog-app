@@ -1,12 +1,15 @@
-import {IsEmail, IsString, IsNotEmpty, Validate} from 'class-validator'
-import { WhitespaceConstraint, IsNaN } from 'src/customValidators/customValidators';
+import { IsEmail, IsString, IsNotEmpty, Validate } from 'class-validator'
+import {
+  WhitespaceConstraint,
+  IsNaN,
+} from 'src/customValidators/customValidators'
 
 export class SignInUserDTO {
-    @IsEmail()
-    email: string;
+  @IsEmail()
+  email: string
 
-    @IsString()
-    @IsNotEmpty()
-    @Validate(WhitespaceConstraint)
-    password: string;
+  @IsString()
+  @IsNotEmpty()
+  @Validate(WhitespaceConstraint)
+  password: string
 }

@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsString, Validate } from 'class-validator';
-import { WhitespaceConstraint } from 'src/customValidators/customValidators';
+import { IsNotEmpty, IsString, Validate } from 'class-validator'
+import { WhitespaceConstraint } from 'src/customValidators/customValidators'
 
 export class ResetPasswordDTO {
-    @IsString()
-    @IsNotEmpty()
-    @Validate(WhitespaceConstraint)
-    password: string;
+  @IsString()
+  @IsNotEmpty()
+  @Validate(WhitespaceConstraint)
+  password: string
 }
