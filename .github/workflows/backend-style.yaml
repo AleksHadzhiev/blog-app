@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Run Prettier
-        run: npm run prettier:check -- --ignore-path ./backend/.gitignore
+        run: npm run prettier:check -- --ignore-path node_modules
 
       - name: Run Nest.js lint
-        run: npm run lint -- --ignore-path ./backend/.gitignore
+        run: npm run lint -- --ignore-path node_modules
