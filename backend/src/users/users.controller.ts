@@ -47,4 +47,10 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
+
+  @Get('/confirm/:token')
+  confirmUser(@Param('token') token: string){
+    console.log("IN ENDPOINT")
+    return this.usersService.confirm(token)
+  }
 }
