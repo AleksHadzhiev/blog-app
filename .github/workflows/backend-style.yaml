@@ -1,9 +1,8 @@
 name: Prettier and Style Check
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   prettier-and-lint:
