@@ -13,6 +13,4 @@ export class Blog {
 
   @Column()
   userId: number
-
-
 }

@@ -6,7 +6,7 @@ import {
 
 @ValidatorConstraint({ name: 'customText', async: false })
 export class WhitespaceConstraint implements ValidatorConstraintInterface {
-  validate(text: string, args: ValidationArguments) {
+  validate(text: string) {
     return text.trim().length > 0
   }
 
@@ -17,7 +17,7 @@ export class WhitespaceConstraint implements ValidatorConstraintInterface {
 
 @ValidatorConstraint({ name: 'customText', async: false })
 export class IsNaN implements ValidatorConstraintInterface {
-  validate(text: string, args: ValidationArguments) {
+  validate(text: string) {
     return isNaN(Number(text))
   }
 

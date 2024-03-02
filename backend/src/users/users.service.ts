@@ -18,24 +18,31 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    let user: User = this.usersRepository.create(createUserDto)
-    let savedUser: Promise<User | null> = this.usersRepository.save(user)
+    const user: User = this.usersRepository.create(createUserDto)
+    const savedUser: Promise<User | null> = this.usersRepository.save(user)
     return savedUser
   }
 
   async signIn(signInUserDTO: SignInUserDTO) {
-    let encryptedPassword = crypto
+    const encryptedPassword = crypto
       .createHmac('sha256', signInUserDTO.password)
       .digest('hex')
-    let user: Promise<User | null> = this.usersRepository.findOneByOrFail({
+    const user: Promise<User | null> = this.usersRepository.findOneByOrFail({
       email: signInUserDTO.email,
       password: encryptedPassword,
     })
     return user
   }
 
+  async getByEmail(email: string) {
+    const user: Promise<User | null> = this.usersRepository.findOneByOrFail({
+      email,
+    })
+    return user
+  }
+
   async getUserById(id: number) {
-    let user: Promise<User | null> = this.usersRepository.findOneBy({ id })
+    const user: Promise<User | null> = this.usersRepository.findOneBy({ id })
     if ((await user) !== null) {
       return `This action returns a the user: ${user} for id: ${id}`
     }
@@ -43,7 +50,7 @@ export class UsersService {
   }
 
   async forgotPassword(forgotPasswordDTO: ForgotPasswordDTO) {
-    let user: Promise<User | null> = this.usersRepository.findOneBy({
+    const user: Promise<User | null> = this.usersRepository.findOneBy({
       email: forgotPasswordDTO.email,
     })
     if ((await user) !== null) {
@@ -56,7 +63,7 @@ export class UsersService {
   }
 
   async resetPassword(id: number, resetPasswordDTO: ResetPasswordDTO) {
-    let user: Promise<User | null> = this.usersRepository.findOneBy({ id })
+    const user: Promise<User | null> = this.usersRepository.findOneBy({ id })
     if ((await user) !== null) {
       ;(await user).password == resetPasswordDTO.password
       await this.updateUserInDB(await user)
@@ -71,7 +78,7 @@ export class UsersService {
   }
 
   async confirm(token: string) {
-    let user: Promise<User | null> = this.usersRepository.findOneBy({
+    const user: Promise<User | null> = this.usersRepository.findOneBy({
       password: token,
     })
     console.log(user)
@@ -85,7 +92,7 @@ export class UsersService {
   }
 
   private async updateUserInDB(user: User) {
-    let updatedUser: User = this.usersRepository.merge(await user)
+    const updatedUser: User = this.usersRepository.merge(await user)
     this.usersRepository.save(updatedUser)
   }
 }

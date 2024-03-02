@@ -35,7 +35,7 @@ export class MailService {
     sendTo: string,
     subject: string,
     template: string,
-    _context: Object,
+    _context: object,
   ) {
     await this.mailService.sendMail({
       to: sendTo,

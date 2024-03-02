@@ -1,8 +1,5 @@
 import { IsEmail, IsString, IsNotEmpty, Validate } from 'class-validator'
-import {
-  WhitespaceConstraint,
-  IsNaN,
-} from 'src/customValidators/customValidators'
+import { WhitespaceConstraint } from 'src/customValidators/customValidators'
 
 export class SignInUserDTO {
   @IsEmail()
