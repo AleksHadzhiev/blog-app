@@ -14,35 +14,50 @@ export class BlogsService {
 
   async create(createBlogDto: CreateBlogDTO) {
     console.log(createBlogDto)
-    let blog: Blog = this.blogsRepository.create(createBlogDto)
-    let savedBlog: Promise<Blog | null> = this.blogsRepository.save(blog)
+    const blog: Blog = this.blogsRepository.create(createBlogDto)
+
+    const savedBlog: Promise<Blog | null> = this.blogsRepository.save(blog)
     return savedBlog
   }
 
-  async editBlog( id:number,editBlogDTO : EditBlogDTO) {
-    let blog: Promise<Blog | null> = this.blogsRepository.findOneBy({ id: id })
-    ;(await blog).title=editBlogDTO.title
-    ;(await blog).description=editBlogDTO.description
-    let savedBlog: Promise<Blog | null> = this.blogsRepository.save(await blog)
-    console.log(`${(await savedBlog).description} and ${(await savedBlog).title}`)
+  async editBlog(id: number, editBlogDTO: EditBlogDTO) {
+    const blog: Promise<Blog | null> = this.blogsRepository.findOneBy({
+      id: id,
+    })
+    ;(await blog).title = editBlogDTO.title
+    ;(await blog).description = editBlogDTO.description
+    const savedBlog: Promise<Blog | null> = this.blogsRepository.save(
+      await blog,
+    )
+    console.log(
+      `${(await savedBlog).description} and ${(await savedBlog).title}`,
+    )
     return savedBlog
   }
 
-  async getABlog(id: number){
-    let blog: Promise<Blog | null> = this.blogsRepository.findOneBy({ id: id })
+  async getABlog(id: number) {
+    const blog: Promise<Blog | null> = this.blogsRepository.findOneBy({
+      id: id,
+    })
     if ((await blog) !== null) {
       return blog
     }
     return `Blog with id: ${id} does not exist`
   }
 
-  async getUserById(userdId: number) {
+  async getAll() {
+    return this.blogsRepository.find()
+  }
+
+  async getForUser(userdId: number) {
     console.log(userdId)
-    let blog: Promise<Blog | null> = this.blogsRepository.findOneBy({userId: userdId})
+    const blog: Promise<Blog | null> = this.blogsRepository.findOneBy({
+      userId: userdId,
+    })
     if ((await blog) !== null) {
       return blog
     }
-    return `Blog with id: ${userdId} does not exist`
+    return `Blogs for user with id: ${userdId} does not exist`
   }
 
   remove(id: number) {
