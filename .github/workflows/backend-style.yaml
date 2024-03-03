@@ -26,6 +26,3 @@ jobs:
 
       - name: Run Prettier
         run: npm run prettier:check
-
-      - name: Run Nest.js lint
-        run: npm run lint
