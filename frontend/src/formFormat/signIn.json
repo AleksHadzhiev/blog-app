@@ -1,0 +1,16 @@
+[
+    {
+        "type": "email",
+        "name": "email",
+        "label":"Email",
+        "placeholder": "example@gmail.com",
+        "data-test-id": "sign-in-email"
+    },
+    {
+        "type": "password",
+        "name": "password",
+        "label": "Password",
+        "placeholder": "Password",
+        "data-test-id": "sign-in-password"
+    }
+]

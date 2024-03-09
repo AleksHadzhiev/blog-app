@@ -1,0 +1,23 @@
+[
+    {
+        "type": "email",
+        "label":"Email",
+        "name": "email",
+        "placeholder": "example@gmail.com",
+        "data-test-id": "sign-up-email"
+    },
+    {
+        "type": "password",
+        "label": "Password",
+        "name": "password",
+        "placeholder": "Password",
+        "data-test-id": "sign-up-password"
+    },
+    {
+        "type": "text",
+        "label": "Name",
+        "name": "name",
+        "placeholder": "Name",
+        "data-test-id": "sign-up-name"
+    }
+]
