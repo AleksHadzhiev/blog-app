@@ -1,17 +1,14 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import formData from "../../formFormat/signUp.json"
 import { signUpValidation } from "@/Validations/UserFormValidations";
+import FormTextInputFIeld from "../Inputs/textInput";
+import SubmitButton from "../Inputs/submitButton";
+import { FormTextInput } from "@/types/formElements";
+import { registerUser } from "@/axios/users";
+import { SignUpUser } from "@/types/userObjects";
 
-export default function SignInForm() {
+export default function SignUpForm() {
     const [formState, setFormState] = useState<{ [key: string]: string }>({});
-
-    interface FormFields {
-        type: string;
-        label: string;
-        name: string,
-        placeholder: string;
-        "data-test-id": string;
-    }
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target
@@ -19,10 +16,10 @@ export default function SignInForm() {
     }
 
     function validateData() {
-        console.log(formState)
         signUpValidation.validate(formState)
             .then(() => {
-                console.log('Data is valid')
+                console.log(formState)
+                registerUser(formState as SignUpUser)
             })
             .catch((error) => {
                 console.log('Validation error:', error.errors[0])
@@ -35,26 +32,24 @@ export default function SignInForm() {
     }
 
     return (
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={HandleSubmit}>
+        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             {
-                formData.map((field: FormFields, index: number) => (
+                formData.map((field: FormTextInput, index: number) => (
                     <div className="mb-4" key={index}>
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>{field.label}</label>
-                        <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id={field.name}
-                            type={field.type}
-                            name={field.name}
+                        <FormTextInputFIeld
+                            action={handleChange}
+                            field={field}
                             value={formState[field.name] || ''}
-                            placeholder={field.placeholder}
-                            onChange={handleChange}
+
                         />
                     </div>
                 ))}
             <div className="flex items-center justify-between">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                    Submit
-                </button>
+                <SubmitButton
+                    buttonText="Submit"
+                    action={HandleSubmit}
+                />
             </div>
         </form>
     )
