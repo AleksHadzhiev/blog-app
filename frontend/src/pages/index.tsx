@@ -1,7 +1,6 @@
+import React from 'react';
 export default function Page() {
     return (
-        <div>
-            Hello Wolrd, This is Aleks:).
-        </div>
-    )
+        <p className="underline">Hello World, This is Aleks:).</p>
+    );
 }
