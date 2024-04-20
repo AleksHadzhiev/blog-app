@@ -1,0 +1,16 @@
+[
+    {
+        "type": "text",
+        "name": "title",
+        "label":"Title",
+        "placeholder": "A sunny day",
+        "data-test-id": "blog-title"
+    },
+    {
+        "type": "text",
+        "name": "description",
+        "label": "Description",
+        "placeholder": "Today is a sunny day. Here are some good thigs you can do on a sunny day",
+        "data-test-id": "blog-description"
+    }
+]

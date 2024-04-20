@@ -6,16 +6,20 @@ import SubmitButton from "../Inputs/submitButton";
 import { FormTextInput } from "@/types/formElements";
 import { registerUser } from "@/axios/users";
 import { SignUpUser } from "@/types/userObjects";
+import NameInputField from "../Inputs/nameInput";
 
 export default function SignUpForm() {
     const [formState, setFormState] = useState<{ [key: string]: string }>({});
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target
+        console.log(name, value)
         setFormState({ ...formState, [name]: value })
     }
 
     function validateData() {
+        console.log(formState)
+        console.log(formData)
         signUpValidation.validate(formState)
             .then(() => {
                 console.log(formState)
@@ -36,13 +40,17 @@ export default function SignUpForm() {
             {
                 formData.map((field: FormTextInput, index: number) => (
                     <div className="mb-4" key={index}>
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>{field.label}</label>
-                        <FormTextInputFIeld
-                            action={handleChange}
-                            field={field}
-                            value={formState[field.name] || ''}
+                        {
+                            (<div>
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>{field.label}</label>
+                                <FormTextInputFIeld
+                                    action={handleChange}
+                                    field={field}
+                                    value={formState[field.name] || ''}
 
-                        />
+                                />
+                            </div>)
+                        }
                     </div>
                 ))}
             <div className="flex items-center justify-between">

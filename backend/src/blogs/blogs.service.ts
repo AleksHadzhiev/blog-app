@@ -14,9 +14,11 @@ export class BlogsService {
 
   async create(createBlogDto: CreateBlogDTO) {
     console.log(createBlogDto)
+    console.log("How are you")
     const blog: Blog = this.blogsRepository.create(createBlogDto)
-
+    console.log(blog)
     const savedBlog: Promise<Blog | null> = this.blogsRepository.save(blog)
+    console.log(savedBlog)
     return savedBlog
   }
 

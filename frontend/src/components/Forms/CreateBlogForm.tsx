@@ -1,14 +1,13 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import formData from "../../formFormat/signIn.json"
-import { signInValidation } from "@/Validations/UserFormValidations";
-import FromTextInputField from "../Inputs/textInput";
+import formData from "../../formFormat/createBlog.json"
+import { CreateBlogValidation } from "@/Validations/BlogFormValidations";
+import FormTextInputFIeld from "../Inputs/textInput";
 import SubmitButton from "../Inputs/submitButton";
 import { FormTextInput } from "@/types/formElements";
-import { signin } from "@/axios/users";
-import { SignInUser } from "@/types/userObjects";
-import EmailInputField from "../Inputs/emailInput";
+import { createBlog } from "@/axios/blogs";
+import { CreateBlog } from "@/types/blogObjects";
 
-export default function SignInForm() {
+export default function CreateBlogForm() {
     const [formState, setFormState] = useState<{ [key: string]: string }>({});
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -17,10 +16,11 @@ export default function SignInForm() {
     }
 
     function validateData() {
-        signInValidation.validate(formState)
-            .then(async () => {
-                await signin(formState as SignInUser)
-                console.log('Data is valid')
+        console.log(formState)
+        CreateBlogValidation.validate(formState)
+            .then(() => {
+                console.log(formState)
+                createBlog(formState as CreateBlog)
             })
             .catch((error) => {
                 console.log('Validation error:', error.errors[0])
@@ -37,14 +37,12 @@ export default function SignInForm() {
             {
                 formData.map((field: FormTextInput, index: number) => (
                     <div className="mb-4" key={index}>
-                        {<>
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>{field.label}</label>
-                            <FromTextInputField
-                                action={handleChange}
-                                field={field}
-                                value={formState[field.name] || ''}
-
-                            /></>}
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>{field.label}</label>
+                        <FormTextInputFIeld
+                            action={handleChange}
+                            field={field}
+                            value={formState[field.name] || ''}
+                        />
                     </div>
                 ))}
             <div className="flex items-center justify-between">

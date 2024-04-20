@@ -7,6 +7,7 @@ import {
 @ValidatorConstraint({ name: 'customText', async: false })
 export class WhitespaceConstraint implements ValidatorConstraintInterface {
   validate(text: string) {
+    console.log(text)
     return text.trim().length > 0
   }
 
