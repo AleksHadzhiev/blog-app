@@ -3,16 +3,35 @@ import ListOfBlogs from "./listOfBlogs"
 import MainBlog from "./mainComponent"
 import SecondaryListOfBlogs from "./secondartyListOfBlogs"
 import SecondaryBlogs from "./secondaryBlogs"
+import { getAllBlogs } from "@/axios/blogs"
+import { useEffect, useState } from "react"
+import { Blog } from "@/types/blogObjects"
 
 export default function Homepage() {
+
+    const [blogs, setBlogs] = useState([])
+    const [mainBlog, setMainBlog] = useState({} as Blog)
+
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            const response = await getAllBlogs()
+            if (blogs.length != response.length) {
+                setBlogs(response)
+            }
+            setMainBlog(response[0])
+        }
+        fetchBlogs()
+        console.log(blogs)
+    }, [blogs])
+
     return (
         <div className="max-w-screen-lg mx-auto">
             <div className="grid grid-cols-2 gap-6">
                 <div className="flex flex-col">
-                    <MainBlog />
+                    <MainBlog blog={mainBlog} />
                 </div>
                 <div className="flex flex-col">
-                    <SecondaryBlogs />
+                    <SecondaryBlogs blogs={blogs} />
                 </div>
             </div>
             <div className="flex mt-16 mb-4 px-4 lg:px-0 items-center justify-between">
@@ -53,4 +72,3 @@ export default function Homepage() {
         </div>
     )
 }
-

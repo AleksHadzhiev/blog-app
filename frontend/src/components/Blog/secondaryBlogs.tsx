@@ -1,4 +1,15 @@
-export default function SecondaryBlogs() {
+import { Blog } from "@/types/blogObjects";
+import { useEffect } from "react";
+
+
+interface Props {
+    blogs: Array<Blog>;
+}
+
+const SecondaryBlogs = ({ blogs }: Props) => {
+    useEffect(() => {
+        console.log(blogs)
+    }, [])
     return (
         <div className="w-full md:w-4/7">
             <div className="rounded w-full flex flex-col md:flex-row mb-10">
@@ -53,3 +64,5 @@ export default function SecondaryBlogs() {
         </div>
     )
 }
+
+export default SecondaryBlogs

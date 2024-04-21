@@ -6,7 +6,6 @@ import SubmitButton from "../Inputs/submitButton";
 import { FormTextInput } from "@/types/formElements";
 import { registerUser } from "@/axios/users";
 import { SignUpUser } from "@/types/userObjects";
-import NameInputField from "../Inputs/nameInput";
 
 export default function SignUpForm() {
     const [formState, setFormState] = useState<{ [key: string]: string }>({});
